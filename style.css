@@ -1,0 +1,825 @@
+/* ================= VARIABLES ================= */
+:root {
+    --bg-primary: #0b0b0f;
+    --bg-secondary: #000000;
+    --forest-green: #FF9B00;
+    --olive: #697565;
+    --cream: #F5F1E8;
+    --accent-gold: #C58B39;
+    --text-white: #ffffff;
+    --text-muted: #a0aab2;
+    
+    --font-heading: 'Oswald', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+    
+    --transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ================= RESET & BASE ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-white);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    /* Page Transition Base */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+body.fade-out {
+    opacity: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section {
+    padding: 100px 0;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: var(--cream);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 60px auto;
+}
+
+/* ================= TYPOGRAPHY ================= */
+.text-gold { color: var(--accent-gold); }
+.text-cream { color: var(--cream); }
+
+/* ================= BUTTONS ================= */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--accent-gold);
+    color: var(--bg-primary);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    transform: scale(1.05);
+}
+
+.btn-outline {
+    border-color: var(--cream);
+    color: var(--cream);
+}
+
+.btn-outline:hover {
+    background-color: var(--cream);
+    color: var(--bg-primary);
+    transform: scale(1.05);
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transition: var(--transition);
+    background: transparent;
+}
+
+.navbar.scrolled {
+    background: rgb(255, 115, 0);
+    backdrop-filter: blur(10px);
+    padding: 15px 5%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Update class .logo agar gambar & teks sejajar secara vertikal */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Jarak antara logo gambar dan teks */
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 2px;
+}
+
+/* Styling khusus untuk ukuran logo gambar */
+.logo-img {
+    height: 40px; /* Sesuaikan ukurannya di sini jika kurang besar/kecil */
+    width: auto;
+    object-fit: contain;
+    transition: var(--transition);
+}
+
+/* Efek hover opsional pada logo */
+.logo:hover .logo-img {
+    transform: scale(1.05);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-white);
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--accent-gold);
+    transition: var(--transition);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 2px;
+    background-color: var(--text-white);
+    transition: var(--transition);
+}
+
+/* ================= HERO SECTION ================= */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    animation: zoomHero 20s infinite alternate linear;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(11,15,12,0.4), var(--bg-primary));
+    z-index: -1;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-size: 4.5rem;
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s 0.5s forwards;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s 0.7s forwards;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards;
+}
+
+/* ================= CARDS & GRIDS ================= */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+    border-color: var(--forest-green);
+}
+
+.card-img-wrapper {
+    overflow: hidden;
+    height: 220px;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card-img {
+    transform: scale(1.1);
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: var(--cream);
+    margin-bottom: 10px;
+}
+
+.card-text {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.card-meta {
+    font-size: 0.85rem;
+    color: var(--accent-gold);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ================= HORIZONTAL CARD (ARTICLE) ================= */
+.card-horizontal {
+    display: flex;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    transition: var(--transition);
+}
+
+.card-horizontal:hover {
+    transform: translateX(10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.card-h-img {
+    flex: 0 0 35%;
+    object-fit: cover;
+}
+
+.card-h-body {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* ================= GALLERY ================= */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 15, 12, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.gallery-overlay h3 {
+    color: var(--cream);
+    transform: translateY(20px);
+    transition: var(--transition);
+}
+
+.gallery-item:hover img { transform: scale(1.1); }
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-item:hover .gallery-overlay h3 { transform: translateY(0); }
+
+/* Gallery Popup */
+.popup {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.popup.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup img {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 4px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+}
+
+.popup-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    background: var(--bg-secondary);
+    padding: 60px 0 20px 0;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-col h4 {
+    color: var(--cream);
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.footer-col p, .footer-col a {
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.footer-col a:hover {
+    color: var(--accent-gold);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* ================= ANIMATIONS (Scroll Observer) ================= */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.animate-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+
+@keyframes zoomHero {
+    from { transform: scale(1); }
+    to { transform: scale(1.15); }
+}
+
+@keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* ================= MEDIA QUERIES ================= */
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: var(--bg-secondary);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+    }
+    
+    .nav-links.active {
+        right: 0;
+    }
+    
+    .hamburger {
+        display: flex;
+        z-index: 1001;
+    }
+    
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .hero-content h1 { font-size: 3rem; }
+    
+    .card-horizontal {
+        flex-direction: column;
+    }
+    .card-h-img {
+        height: 200px;
+    }
+}
+
+/* ================= MAPS INTEGRATION ================= */
+.map-container {
+    width: 100%;
+    height: 280px;
+    margin-top: 30px;
+    border-radius: 8px;
+    overflow: hidden; /* Biar sudut iframe ikut melengkung */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    
+    /* OPSIONAL: Trik filter biar peta terlihat agak gelap & matching sama dark theme */
+    filter: grayscale(30%) invert(90%) hue-rotate(180deg);
+}
+
+/* ================= GRID PENGURUS NYAMPING ================= */
+.officer-filter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.filter-btn {
+    padding: 8px 18px;
+    background: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--accent-gold);
+    color: var(--bg-primary);
+    border-color: var(--accent-gold);
+}
+
+/* Grid Berderet 4 Kolom Kesamping */
+.officer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.officer-card {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: var(--transition);
+}
+
+.officer-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-gold);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Tampilan Foto Setengah Badan (Half Body) */
+.officer-img-box {
+    position: relative;
+    width: 100%;
+    height: 320px; /* Tinggi disetting pas untuk potret setengah badan */
+    overflow: hidden;
+}
+
+.officer-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center; /* Memastikan fokus posisi dari kepala sampai pinggang */
+    transition: transform 0.5s ease;
+}
+
+.officer-card:hover .officer-img-box img {
+    transform: scale(1.06);
+}
+
+/* Badge Jabatan di Atas Foto */
+.officer-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: rgba(11, 15, 12, 0.85);
+    backdrop-filter: blur(6px);
+    color: var(--accent-gold);
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+    border-radius: 4px;
+    border: 1px solid rgba(197, 139, 57, 0.3);
+}
+
+.officer-info {
+    padding: 18px;
+    text-align: center;
+}
+
+.officer-name {
+    font-size: 1.15rem;
+    color: var(--cream);
+    margin-bottom: 4px;
+}
+
+.officer-npa {
+    font-size: 0.8rem;
+    color: var(--accent-gold);
+    margin-bottom: 2px;
+}
+
+.officer-prodi {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Animasi Buka Tutup Filter */
+.officer-card.hide {
+    display: none;
+}
+
+/* ================= GALLERY ALBUM CARD ================= */
+.gallery-album-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4 / 3;
+}
+
+.gallery-album-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.album-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(11, 15, 12, 0.85);
+    backdrop-filter: blur(5px);
+    color: var(--accent-gold);
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-family: var(--font-heading);
+    border-radius: 4px;
+    border: 1px solid rgba(197, 139, 57, 0.3);
+    z-index: 2;
+}
+
+/* ================= GALLERY OVERLAY (CENTERED) ================= */
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 15, 12, 0.85);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.gallery-overlay h3 {
+    color: var(--cream);
+    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+    transform: translateY(15px);
+    transition: var(--transition);
+    margin: 0;
+}
+
+/* Efek Hover */
+.gallery-album-card:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-album-card:hover .gallery-overlay h3 {
+    transform: translateY(0);
+}
+
+/* ================= LIGHTBOX SLIDER STYLES ================= */
+.lightbox-container {
+    position: relative;
+    max-width: 90%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-img-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-img {
+    max-width: 100%;
+    max-height: 75vh;
+    border-radius: 6px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    object-fit: contain;
+}
+
+/* Navigasi Panah Slider (Kiri & Kanan) */
+.lightbox-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(21, 26, 23, 0.7);
+    color: var(--cream);
+    border: 1px solid rgba(255,255,255,0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+    z-index: 2005;
+}
+
+.lightbox-btn:hover {
+    background: var(--accent-gold);
+    color: var(--bg-primary);
+}
+
+.lightbox-prev { left: -60px; }
+.lightbox-next { right: -60px; }
+
+.lightbox-meta {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.lightbox-title {
+    font-size: 1.2rem;
+    color: var(--cream);
+    font-family: var(--font-heading);
+}
+
+.lightbox-counter {
+    font-size: 0.85rem;
+    color: var(--accent-gold);
+    margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+    .lightbox-prev { left: 10px; }
+    .lightbox-next { right: 10px; }
+}
